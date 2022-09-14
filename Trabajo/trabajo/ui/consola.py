@@ -78,8 +78,8 @@ class Consola:
                     {respuesta}
                     -----------------------
                     """)
-                    cedula = input("ingrese cedula")
-                    clave = input("ingrese su clave")
+                    cedula = input("ingrese cedula : ")
+                    clave = input("ingrese su clave : ")
                     iniciar_sesion = self.cine.iniciar_sesion_usuario(cedula, clave)
                     if iniciar_sesion is not None:
                         if iniciar_sesion == 0:
