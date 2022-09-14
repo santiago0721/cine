@@ -1,6 +1,6 @@
 from typing import Optional
 import numpy as np
-
+#
 class Comestible:
     def __init__(self, nombre: str, descripcion: str, cantidad_disponible: int, precio_unitario: float):
         self.nombre: str = nombre
