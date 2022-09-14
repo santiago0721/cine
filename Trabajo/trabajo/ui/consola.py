@@ -13,9 +13,9 @@ class Consola:
     def mostrar_menu(self):
         print("""
         \n 
-        """"""""""""""""""
+        ++++++++++++++++++++
         BIENVENIDO AL CINE
-        """"""""""""""""""
+        ++++++++++++++++++++
         \n
         MENU DE OPCIONES:
         \n
@@ -48,7 +48,52 @@ class Consola:
 
 
     def ingresar_cuenta(self):
-        pass
+        print("\n INICIAR SESIÓN")
+
+        while True:
+            print("""
+                    1:INICIAR COMO ADMIN
+                    2:USUARIO
+                    
+                    """)
+            opcion = input("ingrese la opcion : ")
+            respuesta = self.cine.iniciar_sesion_opcion(opcion)
+            if respuesta is not None:
+                #poner otro while
+                if respuesta == "iniciar sesion admin":
+                    print(f"""
+                    -----------------------
+                    {respuesta}
+                    -----------------------
+                    """)
+                    clave = input("ingrese a clave ")
+                    if self.cine.iniciar_sesion_admin(clave):
+                        print("melos")
+
+                    else:
+                        print("contraseña invalida")
+                else:
+                    print(f"""
+                     -----------------------
+                    {respuesta}
+                    -----------------------
+                    """)
+                    cedula = input("ingrese cedula")
+                    clave = input("ingrese su clave")
+                    iniciar_sesion = self.cine.iniciar_sesion_usuario(cedula, clave)
+                    if iniciar_sesion is not None:
+                        if iniciar_sesion == 0:
+                            print("ingreso con exito")
+                        else:
+                            print("contraseña invalida")
+
+                    else: print("esta cuenta no esta registrada")
+
+            else:
+                print("INGRESE UNA OPCION CORRECTA")
+
+
+
 
 
     def salir(self):
