@@ -144,6 +144,7 @@ class Consola:
         print("no implementado aun")
 
     def agregar_comestibles_bolsa(self):
+        pass
 
 
     def ver_bolsa(self):
