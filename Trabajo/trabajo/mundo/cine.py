@@ -8,6 +8,11 @@ class Comestible:
         self.cantidad_disponible: int = cantidad_disponible
         self.precio_unitario: float = precio_unitario
 
+    def unidades_disponibles(self,cantidad) -> bool:
+        return self.cantidad_disponible >= cantidad
+
+
+
 class Pelicula:
 
     def __init__(self,nombre: str, duracion:int, genero: str, sinopsis: str):
@@ -48,13 +53,12 @@ class Usuario:
         self.nombre: str = nombre
         self.clave: str = clave
         self.bolsa: Bolsa = Bolsa()
-
-
+    def agregar_comestible_bolsa(self,comestible:Comestible,cantidad:int):
 class Cine:
 
     def __init__(self):
         self.total_acumulado: float = 0
-        self.comestibles: list[Comestible] = []
+        self.comestibles: dict[str:Comestible] = {}
         self.usuarios: dict[str: Usuario] = {}
         self.clave_admin = "10111"
 
@@ -80,13 +84,16 @@ class Cine:
         """
         chequea la opcion ingresada y devuelve el valor ingresado de este estar en el rango
         :param opcion: (str) es la opcion que se puede escoger en el meno de iniciar sesion
-        :return: "1" si desea iniciar como admin<br>
-        "2" si desea iniciar como un usuario <br>
+        :return: "iniciar sesion admin" si desea iniciar como admin<br>
+        "iniciar sesion usuario" si desea iniciar como un usuario <br>
+        "volver" si desea regresar al menu anterior
         None si es una opcion por fuera del rango
         """
-        if (opcion == "1") or (opcion == "2"):
+        if (opcion == "1") or (opcion == "2") or (opcion == "3"):
             if opcion == "1":
                 return "iniciar sesion admin"
+            elif opcion == "3":
+                return "volver"
             else:
                 return "iniciar sesion usuario"
         else:
@@ -108,5 +115,23 @@ class Cine:
             return True
         else:
             return False
+
+    def buscar_comestible(self,nombre:str)-> Optional[Comestible]:
+        if nombre in self.comestibles.keys():
+            return self.comestibles[nombre]
+        else:
+            return None
+    def agregar_comestibles_bolsa(self,nombre:str,cantidad: int):
+        comestible = self.buscar_comestible(nombre)
+        if comestible is not None:
+            if Comestible.unidades_disponibles(cantidad):
+                Usuario.agregar_comestible_bolsa(comestible,cantidad)
+                return 0
+            else:
+                return 1
+        else:
+            return 2
+
+
 
 
