@@ -4,7 +4,6 @@ from Trabajo.trabajo.mundo.cine import Cine
 class Consola:
     def __init__(self):
         self.cine = Cine()
-        self.usuario_app = " "
         self.opciones = {
             "1": self.registrarse,
             "2": self.ingresar_cuenta,
@@ -142,6 +141,7 @@ class Consola:
 
     def reservar(self):
         print("no implementado aun")
+
 
     def agregar_comestibles_bolsa(self):
         pass

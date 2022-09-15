@@ -8,7 +8,7 @@ class Comestible:
         self.cantidad_disponible: int = cantidad_disponible
         self.precio_unitario: float = precio_unitario
 
-    def unidades_disponibles(self,cantidad) -> bool:
+    def unidades_disponibles(self,cantidad: int) -> bool:
         return self.cantidad_disponible >= cantidad
 
 
@@ -46,6 +46,10 @@ class Bolsa:
         self.items = []
         self.total = 0
 
+    def agregar_item(self, producto, cantidad):
+        item = Item(producto, cantidad)
+        self.items.append(item)
+
 
 class Usuario:
     def __init__(self, cedula: str, nombre: str, clave: str):
@@ -54,13 +58,16 @@ class Usuario:
         self.clave: str = clave
         self.bolsa: Bolsa = Bolsa()
     def agregar_comestible_bolsa(self,comestible:Comestible,cantidad:int):
+        self.bolsa.agregar_item(comestible, cantidad)
+
 class Cine:
 
     def __init__(self):
         self.total_acumulado: float = 0
         self.comestibles: dict[str:Comestible] = {}
         self.usuarios: dict[str: Usuario] = {}
-        self.clave_admin = "10111"
+        self.clave_admin = 10111
+        self.usuario_actual: Usuario = Usuario("", "", "")
 
 
 
@@ -106,6 +113,7 @@ class Cine:
         else:
             return None
         if usuario.clave == clave:
+            self.usuario_actual = usuario
             return 0
         else:
             return 1
@@ -116,16 +124,19 @@ class Cine:
         else:
             return False
 
-    def buscar_comestible(self,nombre:str)-> Optional[Comestible]:
+    def buscar_comestible(self, nombre: str) -> Optional[Comestible]:
         if nombre in self.comestibles.keys():
             return self.comestibles[nombre]
         else:
             return None
-    def agregar_comestibles_bolsa(self,nombre:str,cantidad: int):
+    def agregar_comestibles_bolsa(self, nombre:str, cantidad: int) -> int:
+
         comestible = self.buscar_comestible(nombre)
+
         if comestible is not None:
-            if Comestible.unidades_disponibles(cantidad):
-                Usuario.agregar_comestible_bolsa(comestible,cantidad)
+            if comestible.unidades_disponibles(cantidad):
+
+                self.usuario_actual.agregar_comestible_bolsa(comestible, cantidad)
                 return 0
             else:
                 return 1
