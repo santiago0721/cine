@@ -21,17 +21,23 @@ class Consola:
 
     def mostrar_menu(self):
         print("""
-        \n 
-        ++++++++++++++++++++
-        BIENVENIDO AL CINE
-        ++++++++++++++++++++
-        \n
-        -------------------
-        1: REGISTRARSE
-        2: INGRESAR CUENTA
-        3: SALIR
-        -------------------
-        """)
+                \n 
+                ==✧･ﾟ: *✧･ﾟ:*  ───── ⋆⋅☆⋅⋆ ─────  ✧･ﾟ: *✧･ﾟ:*==
+                |                                             |
+                |      ‧͙⁺˚*･༓☾ BIENVENIDO AL CINE ☽༓･*˚⁺‧͙       |
+                |                                             | 
+                ✧･ﾟ: *✧･ﾟ:* ======================= ✧･ﾟ: *✧･ﾟ:*
+                |                                             |
+                |              MENU DE OPCIONES:              |
+                |                                             |
+                ====✧･ﾟ: *✧･ﾟ:*================================
+                |                                             |
+                |             1: REGISTRARSE                  |
+                |             2: INGRESAR CUENTA              |
+                |             3: SALIR                        |
+                |                                             ||
+                ===============================✧･ﾟ: *✧･ﾟ:*=====
+                """)
 
     def mostrar_menu_principal(self):
         print("""
@@ -144,7 +150,16 @@ class Consola:
 
 
     def agregar_comestibles_bolsa(self):
-        pass
+        nombre = input("ingrese el nombre del producto")
+        cantidad = int(input("ingrese la cantidad que desea"))
+        resultado = self.cine.agregar_comestibles_bolsa(nombre, cantidad)
+        if resultado == 0:
+            print(f"se agregaron {cantidad} de {nombre} a la bolsa")
+        elif resultado == 1:
+            print(f"no hay suficientes unidades disponibles de {nombre} ")
+        else:
+            print(f"no se encontro el comestible {nombre}")
+
 
 
     def ver_bolsa(self):

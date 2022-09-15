@@ -39,12 +39,12 @@ class Item:
     def __init__(self, producto, cantidad: int):
         self.producto = producto
         self.cantidad: int = cantidad
-        self.total = 0
+        self.total_item = 0
 
 class Bolsa:
     def __init__(self):
         self.items = []
-        self.total = 0
+        self.valor_total = 0
 
     def agregar_item(self, producto, cantidad):
         item = Item(producto, cantidad)
@@ -143,6 +143,7 @@ class Cine:
         else:
             return 2
 #
+
 
 
 
