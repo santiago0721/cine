@@ -11,17 +11,17 @@ class Consola:
         }
         self.menu_opciones_mostrar = {
             "1": self.reservar,
-            "2": self.agregar_comestibles_bolsa,
-            "3": self.ver_bolsa,
-            "4": self.eliminar_item_de_bolsa,
-            "5": self.comprar_bolsa,
-            "6": self.ver_estadisticas,
-            "7": self.salir
+            "2": self.ver_comestibles_disponibles,
+            "3": self.agregar_comestibles_bolsa,
+            "4": self.ver_bolsa,
+            "5": self.eliminar_item_de_bolsa,
+            "6": self.comprar_bolsa,
+            "7": self.ver_estadisticas,
+            "8": self.salir
         }
 
     def mostrar_menu(self):
-        print("""
-                \n 
+        print(""" 
                 ==✧･ﾟ: *✧･ﾟ:*  ───── ⋆⋅☆⋅⋆ ─────  ✧･ﾟ: *✧･ﾟ:*==
                 |                                             |
                 |      ‧͙⁺˚*･༓☾ BIENVENIDO AL CINE ☽༓･*˚⁺‧͙       |
@@ -35,142 +35,176 @@ class Consola:
                 |             1: REGISTRARSE                  |
                 |             2: INGRESAR CUENTA              |
                 |             3: SALIR                        |
-                |                                             ||
+                |                                             |
                 ===============================✧･ﾟ: *✧･ﾟ:*=====
+                
                 """)
 
     def mostrar_menu_principal(self):
         print("""
-        ++++++++++++++++++++
-            MENU INICIAL
-        ++++++++++++++++++++
-        \n
-        -------------------
-        1: RESERVAR
-        2: AGREGAR COMESTIBLES A LA BOLSA
-        3: VER BOLSA
-        4: ELIMINAR ITEM DE BOLSA
-        5: COMPRAR BOLSA
-        6: VER ESTADISTICAS
-        7: SALIR
-        -------------------
-        """)
+                        ✧･ﾟ: *✧･ﾟ:* ======================= ✧･ﾟ: *✧･ﾟ:*
+                        |                                             |
+                        |                 MENU PRINCIPAL:             |
+                        |                                             |
+                        ====✧･ﾟ: *✧･ﾟ:*================================
+                        |                                             |
+                        |           1: RESERVAR                       |
+                        |           2: COMESTIBLES DISPONIBLES        |
+                        |           3: AGREGAR COMESTIBLES A LA BOLSA |
+                        |           4: VER BOLSA                      |
+                        |           5: ELIMINAR ITEM DE BOLSA         |
+                        |           6: COMPRAR BOLSA                  |
+                        |           7: VER ESTADISTICAS               |
+                        |           8: SALIR                          |
+                        |                                             |
+                        ===============================✧･ﾟ: *✧･ﾟ:*=====
+                        
+                        """)
 
 
 
     def ejecutar(self):
         while True:
             self.mostrar_menu()
-            opcion = input("Seleccione una opción: ")
+            opcion = input("Seleccione una opción : ")
             funcion = self.opciones.get(opcion)
             if funcion is not None:
                 funcion()
             else:
-                print(f"{opcion} no es una opción válida")
+                print(f"\n {opcion} no es una opción válida")
 
     def ejecutar_menu_principal(self):
         while True:
             self.mostrar_menu_principal()
-            opcion = input("Seleccione una opción: ")
+            opcion = input("Seleccione una opción : ")
             funcion = self.menu_opciones_mostrar.get(opcion)
             if funcion is not None:
                 funcion()
             else:
-                print(f"{opcion} no es una opción válida")
+                print(f"\n {opcion} no es una opción válida")
 
     def registrarse(self):
-        print("\n REGISTRAR USUARIO")
-        cedula = input("ingrese cedula: ")
-        nombre = input("ingrese nombre: ")
-        clave = input("ingrese su clave :")
+        print("\n REGISTRAR USUARIO ")
+        cedula = input("\n ingrese cedula : ")
+        nombre = input("\n ingrese nombre : ")
+        clave = input("\n ingrese su clave :")
         if self.cine.registrar_usuario(cedula, nombre, clave):
-            print("EL REGISTRO SE HIZO EXITOSAMENTE")
+            print("\n EL REGISTRO SE HIZO EXITOSAMENTE")
         else:
-            print("YA EXISTE UNA CUENTA CON ESTA CEDULA")
+            print("\n YA EXISTE UNA CUENTA CON ESTA CEDULA")
 
 
     def ingresar_cuenta(self):
 
         while True:
             print("""
-            -----------------------------
-                    \n INICIAR SESIÓN:
+                ✧･ﾟ: *✧･ﾟ:* ======================= ✧･ﾟ: *✧･ﾟ:*
+                |                                             |
+                |              MENU DE INGRESO:               |
+                |                                             |
+                ====✧･ﾟ: *✧･ﾟ:*================================
+                |                                             |
+                |             1: INGRESAR COMO ADMIN          |
+                |             2: INGRESAR USUARIO             |
+                |             3: VOLVER                       |
+                |                                             |
+                ===============================✧･ﾟ: *✧･ﾟ:*=====
                 
-                    1:INICIAR COMO ADMIN
-                    2:USUARIO
-                    3:VOLVER
+                """)
                     
-                    """)
+
             opcion = input("ingrese la opcion : ")
             respuesta = self.cine.iniciar_sesion_opcion(opcion)
             if respuesta is not None:
 
                 if respuesta == "iniciar sesion admin":
                     print(f"""
-                    -----------------------
-                    {respuesta}
-                    -----------------------
+                    =========================
+                     {respuesta}
+                    =========================
                     """)
-                    clave = input("ingrese a clave ")
+                    clave = input("\n ingrese la clave : ")
                     if self.cine.iniciar_sesion_admin(clave):
-                        print("melos")
+                        print("\n ingreso exitoso")
 
                     else:
-                        print("contraseña invalida")
+                        print("\n contraseña invalida")
 
                 elif respuesta == "volver":
                     self.ejecutar()
 
                 else:
                     print(f"""
-                     -----------------------
-                    {respuesta}
-                    -----------------------
+                     ========================
+                      {respuesta}
+                     ========================
                     """)
 
-                    cedula = input("ingrese cedula : ")
-                    clave = input("ingrese su clave : ")
+                    cedula = input("\n ingrese cedula : ")
+                    clave = input("\n ingrese su clave : ")
                     self.usuario_app = self.cine.iniciar_sesion_usuario(cedula, clave)
 
                     if self.usuario_app is not None:
                         if self.usuario_app == 0:
-                            print("ingreso con exito")
+                            print("\n ingreso con exito")
                             self.ejecutar_menu_principal()
 
                         else:
-                            print("contraseña invalida")
+                            print("\n contraseña invalida")
 
-                    else: print("esta cuenta no esta registrada")
+                    else:
+                        print("\n esta cuenta no esta registrada")
 
             else:
-                print("INGRESE UNA OPCION CORRECTA")
+                print("\n INGRESE UNA OPCION CORRECTA")
 
     def reservar(self):
         print("no implementado aun")
 
+    def ver_comestibles_disponibles(self):
+        print("""
+                =========================
+                 COMESTIBLES DISPONIBLES
+                =========================
+                """)
+        lista_comestibles = self.cine.mostrar_comestibles_disponibles()
+        for i in range(len(lista_comestibles)):
+            print(f"{i + 1}. {lista_comestibles[i][0]}")
 
     def agregar_comestibles_bolsa(self):
-        nombre = input("ingrese el nombre del producto")
-        cantidad = int(input("ingrese la cantidad que desea"))
+        nombre: str = input("\n ingrese el nombre del producto : ")
+        cantidad: int = int(input("\n ingrese la cantidad que desea :"))
         resultado = self.cine.agregar_comestibles_bolsa(nombre, cantidad)
         if resultado == 0:
-            print(f"se agregaron {cantidad} de {nombre} a la bolsa")
+            print(f"\n se agregaron {cantidad} de {nombre} a la bolsa")
         elif resultado == 1:
-            print(f"no hay suficientes unidades disponibles de {nombre} ")
+            print(f"\n no hay suficientes unidades disponibles de {nombre} ")
         else:
-            print(f"no se encontro el comestible {nombre}")
+            print(f"\n no se encontro el comestible {nombre}")
 
 
 
     def ver_bolsa(self):
-        pass
+        print("""
+        ====================
+         PRODUCTOS EN BOLSA
+        ====================
+        """)
+        lista_items = self.cine.mostrar_items_bolsa()
+        for i in range(len(lista_items)):
+            print(f"\n {i+1}. {lista_items[i]}")
 
     def eliminar_item_de_bolsa(self):
-        pass
+        self.ver_bolsa()
+        indice: int = int(input("\n ingrese el numero del elemento que desea eliminar : "))
+        if self.cine.eliminar_item(indice) is True:
+            print("\n ELEMENTO ELIMINADO")
+        else:
+            print("\n EL NUMERO INGRESADO NO ESTA EN LA LISTA")
     def comprar_bolsa(self):
-        pass
+        print("no implementado aun")
     def ver_estadisticas(self):
-        pass
+        print("no implementado aun")
 
     def salir(self):
 
