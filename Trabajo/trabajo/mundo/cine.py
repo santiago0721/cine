@@ -1,5 +1,5 @@
 from typing import Optional
-import numpy as np
+
 #
 class Comestible:
     def __init__(self, nombre: str, descripcion: str, cantidad_disponible: int, precio_unitario: float):
@@ -11,6 +11,8 @@ class Comestible:
     def unidades_disponibles(self,cantidad: int) -> bool:
         return self.cantidad_disponible >= cantidad
 
+    def __str__(self):
+        return self.nombre
 
 
 class Pelicula:
@@ -21,15 +23,13 @@ class Pelicula:
         self.genero: str = genero
         self.sinopsis: str = sinopsis
 
+    def __str__(self):
+        return self.nombre
+
 class Sala:
 
     def __init__(self, hora: str, precio_boleta: float, pelicula: Pelicula):
-        self.asientos = np.array([
-            ("o", "o", "o", "o", "o"),
-            ("o", "o", "o", "o", "o"),
-            ("o", "o", "o", "o", "o"),
-            ("o", "o", "o", "o", "o")
-        ])
+        self.asientos = []
         self.hora: str = hora
         self.precio_boleta: float = precio_boleta
         self.pelicula: Pelicula = pelicula
@@ -41,6 +41,9 @@ class Item:
         self.cantidad: int = cantidad
         self.total_item = 0
 
+    def __str__(self):
+        return f"NOMBRE = {self.producto}       CANTIDAD = {self.cantidad}"
+
 class Bolsa:
     def __init__(self):
         self.items = []
@@ -49,6 +52,8 @@ class Bolsa:
     def agregar_item(self, producto, cantidad):
         item = Item(producto, cantidad)
         self.items.append(item)
+
+
 
 
 class Usuario:
@@ -68,7 +73,7 @@ class Cine:
         self.usuarios: dict[str: Usuario] = {}
         self.clave_admin = 10111
         self.usuario_actual: Usuario = Usuario("", "", "")
-
+        self.datos_cargados()
 
 
     def registrar_usuario(self, cedula: str, nombre: str, clave: str)-> bool:
@@ -143,6 +148,27 @@ class Cine:
         else:
             return 2
 #
+    def mostrar_items_bolsa(self):
+        return self.usuario_actual.bolsa.items
+
+    def mostrar_comestibles_disponibles(self) -> list:
+        lista: list = []
+        for objeto in self.comestibles.items():
+            lista.append(objeto)
+        return lista
+
+    def eliminar_item(self,indice:int) -> bool:
+        if (indice > 0) and (indice<= len(self.usuario_actual.bolsa.items)):
+            self.usuario_actual.bolsa.items.pop(indice-1)
+            return True
+        else:
+            return False
+
+
+    def datos_cargados(self):
+        self.comestibles["crispetas"] = Comestible("crispetas", "comestible rapido", 22,10000)
+        self.comestibles["chocolatina"] = Comestible("chocolatina", "comestible rapido", 20, 6000)
+        self.comestibles["gaseosa"] = Comestible("gaseosa", "bebida", 18, 8000)
 
 
 
